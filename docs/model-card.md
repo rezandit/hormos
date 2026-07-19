@@ -20,6 +20,33 @@
 - **Out of scope:** diagnosis, treatment, clinical decision-making, or any
   individual medical claim.
 
+## 2a. Population scope / Out-of-scope populations
+
+**In scope:** non-pregnant individuals with a menstrual cycle. The engine
+characterizes symptoms relative to four cyclical phases
+(menstrual / follicular / ovulatory / luteal).
+
+**Explicitly out of scope: pregnancy, active conception planning, and early
+postpartum (< 6 months).** This is a deliberate, documented limitation:
+
+- The underlying reference data (mcPHASES) recruits participants who menstruate
+  — i.e. a non-pregnant, cyclical population. NHANES contributes cross-sectional
+  reference context, not pregnancy-specific longitudinal signals.
+- Pregnancy has a fundamentally different, **non-cyclical** hormonal profile
+  (sustained high hCG; progesterone/estrogen rising continuously from the
+  placenta). It does not fit the four-phase model at all.
+- Pregnancy symptoms (fatigue, nausea, brain fog) overlap heavily with luteal/PMS
+  symptoms, so the model would produce a technically valid but **substantively
+  misleading** phase match.
+
+**Mitigation (this iteration):** a pre-form **screening gate** in the app asks
+whether the user is pregnant, trying to conceive, or postpartum (< 6 months).
+If yes, the symptom form is not shown and a neutral, empathetic message directs
+them to their care provider. The answer is ephemeral client-side state — it is
+**not stored, transmitted, or logged** (no consent flow exists to collect
+pregnancy status). Building a pregnancy-appropriate model would require
+trimester-specific datasets and is out of scope for this iteration.
+
 ## 3. Inputs / outputs
 
 - **Input:** `{ symptoms: { fatigue|migraine|mood|brain_fog|cramps: 0-3 } }`

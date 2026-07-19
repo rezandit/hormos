@@ -37,6 +37,28 @@
 
 TODO: per-field coverage table (which source populates which field, % non-null).
 
+## 3a. Population scope / Out-of-scope populations
+
+**In scope:** non-pregnant individuals with a menstrual cycle (cyclical hormonal
+profile).
+
+**Explicitly out of scope: pregnancy, conception planning, and early postpartum
+(< 6 months).** This follows directly from how the source data was collected:
+
+- **mcPHASES** recruits participants who menstruate ("young adults who
+  menstruate") — a non-pregnant, cyclical population. It contains no
+  pregnancy trimester-specific cohort.
+- **NHANES** here contributes cross-sectional reference context (thyroid,
+  demographics), not pregnancy longitudinal signals.
+- Pregnancy's hormonal profile is **non-cyclical** (sustained high hCG;
+  placental progesterone/estrogen rising continuously) and does not map onto the
+  four-phase cycle model this dataset supports.
+
+Any downstream model built on this schema therefore **must not** be applied to
+pregnant, conceiving, or early-postpartum users. The HormOS app enforces this
+with a pre-form screening gate (see `docs/model-card.md` §2a). Supporting these
+populations would require separate, trimester-specific datasets.
+
 ## 4. Provenance, licensing & ethics
 
 - **Raw data is never redistributed** in this repo (`data/raw/` is git-ignored).

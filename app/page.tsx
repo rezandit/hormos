@@ -24,8 +24,10 @@ export default function Home() {
         {/* Gentle, non-clinical note (kept intentionally short and friendly). */}
         <div className="mb-10 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
           HormOS helps you notice patterns and understand your body better. It
-          isn&apos;t a doctor and doesn&apos;t diagnose — always talk to a
-          healthcare professional about your health.
+          isn&apos;t a doctor and doesn&apos;t diagnose. Its insights reflect
+          non-pregnant, cyclical patterns and aren&apos;t applicable during
+          pregnancy or postpartum. Always talk to a healthcare professional
+          about your health.
         </div>
 
         {/* Core feature */}
