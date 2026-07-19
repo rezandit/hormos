@@ -1,3 +1,4 @@
+import NhanesReference from "@/components/NhanesReference";
 import SymptomInsight from "@/components/SymptomInsight";
 
 export default function Home() {
@@ -31,6 +32,20 @@ export default function Home() {
 
         {/* Core feature */}
         <SymptomInsight />
+
+        {/* Real population reference derived from the data pipeline (NHANES). */}
+        <div className="mt-12">
+          <NhanesReference />
+          <p className="mt-2 text-xs text-slate-400">
+            The cycle-phase insight above uses a labeled synthetic sample
+            pending PhysioNet mcPHASES access; the thyroid reference here is real
+            data produced by the same pipeline (
+            <code className="rounded bg-slate-100 px-1 py-0.5">
+              ml/pipeline/build_nhanes_reference.py
+            </code>
+            ).
+          </p>
+        </div>
 
         {/* Foundation / provenance section */}
         <section className="mt-14 grid gap-6 md:grid-cols-3">

@@ -12,10 +12,11 @@ static artifacts the Next.js app consumes.
 | File | Purpose | Status |
 |---|---|---|
 | `config.py` | Shared paths, constants, schema field names. | ready |
-| `load_nhanes.py` | Download + parse NHANES `.XPT` files (CDC, public), map to unified schema. | skeleton (download works; mapping = TODO) |
+| `load_nhanes.py` | Download + parse NHANES `.XPT` files (CDC, public), map adult women to the unified schema (demographics, reproductive, TSH). | **implemented** (NHANES 2011-2012) |
 | `load_mcphases.py` | Parse mcPHASES (PhysioNet, credentialed), map to unified schema. | placeholder (blocked on PhysioNet credentialing) |
-| `integrate.py` | Concatenate per-source frames into one `daily_observation` table + write processed export. | skeleton |
-| `build_insights.py` | Compute symptom-to-cycle-phase statistics + correlations, write `data/processed/insights.sample.json`. | skeleton |
+| `integrate.py` | Concatenate per-source frames into `subject` + `daily_observation` tables + write parquet exports. | implemented |
+| `build_nhanes_reference.py` | Compute the **real** NHANES population-reference artifact (TSH distribution, reproductive demographics) → `data/processed/nhanes_reference.json`. | **implemented** |
+| `build_insights.py` | Compute symptom-to-cycle-phase statistics + correlations → `data/processed/insights.sample.json`. | needs mcPHASES (NHANES has no cycle-phase data) |
 
 ## Typical run
 
@@ -27,15 +28,23 @@ pip install -r requirements.txt
 # 1. Download + map public NHANES data (safe: public, de-identified)
 python -m pipeline.load_nhanes
 
-# 2. (After PhysioNet approval) place mcPHASES files under data/raw/mcphases/
-python -m pipeline.load_mcphases
-
-# 3. Integrate to the unified schema
+# 2. Integrate to the unified schema (subject + daily_observation parquet)
 python -m pipeline.integrate
 
-# 4. Recompute the insight artifact consumed by the app
+# 3. Build the REAL NHANES reference artifact consumed by the app
+python -m pipeline.build_nhanes_reference
+
+# 4. (After PhysioNet approval) place mcPHASES files under data/raw/mcphases/,
+#    implement load_mcphases, then compute the cycle-phase insight artifact
+python -m pipeline.load_mcphases
 python -m pipeline.build_insights
 ```
+
+> The NHANES steps run today end-to-end and produce
+> `data/processed/nhanes_reference.json` with real numbers. The
+> symptom-to-cycle-phase `insights.sample.json` remains a labeled synthetic
+> sample until mcPHASES is available, because NHANES is cross-sectional and has
+> no daily cycle-phase data.
 
 ## Data governance
 

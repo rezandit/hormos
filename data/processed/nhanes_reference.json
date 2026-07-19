@@ -1,0 +1,97 @@
+{
+  "artifact": "hormos_nhanes_reference",
+  "schema_ref": "hormos_unified_longitudinal_v0",
+  "version": "0.1.0",
+  "generated_by": "ml/pipeline/build_nhanes_reference.py",
+  "source": {
+    "dataset": "NHANES",
+    "provider": "CDC / National Center for Health Statistics",
+    "cycle": "2011-2012",
+    "files": [
+      "DEMO_G",
+      "RHQ_G",
+      "THYROD_G"
+    ],
+    "population": "Adult women (age >= 18) with an examination record.",
+    "license": "Public domain (US Government work)."
+  },
+  "data_status": "REAL \u2014 derived from public NHANES data.",
+  "disclaimer": "Descriptive population statistics for research/education only. The TSH reference interval shown is generic laboratory context, not a clinical threshold, and this is not a diagnosis.",
+  "n_women": 2967,
+  "tsh": {
+    "unit": "mIU/L",
+    "reference_interval": {
+      "low": 0.4,
+      "high": 4.0
+    },
+    "overall": {
+      "n": 841,
+      "mean": 1.95,
+      "median": 1.52,
+      "p10": 0.71,
+      "p25": 1.05,
+      "p75": 2.22,
+      "p90": 3.22
+    },
+    "by_age_band": {
+      "18-29": {
+        "n": 196,
+        "mean": 1.67,
+        "median": 1.47,
+        "p10": 0.69,
+        "p25": 1.0,
+        "p75": 2.14,
+        "p90": 2.88
+      },
+      "30-39": {
+        "n": 135,
+        "mean": 2.03,
+        "median": 1.56,
+        "p10": 0.75,
+        "p25": 1.06,
+        "p75": 2.23,
+        "p90": 3.26
+      },
+      "40-49": {
+        "n": 128,
+        "mean": 1.7,
+        "median": 1.5,
+        "p10": 0.73,
+        "p25": 1.08,
+        "p75": 1.96,
+        "p90": 2.98
+      },
+      "50-59": {
+        "n": 130,
+        "mean": 2.62,
+        "median": 1.54,
+        "p10": 0.76,
+        "p25": 1.08,
+        "p75": 2.16,
+        "p90": 3.14
+      },
+      "60+": {
+        "n": 252,
+        "mean": 1.9,
+        "median": 1.65,
+        "p10": 0.7,
+        "p25": 1.13,
+        "p75": 2.48,
+        "p90": 3.39
+      }
+    },
+    "distribution_vs_reference": {
+      "n": 841,
+      "within_pct": 94.1,
+      "below_pct": 1.7,
+      "above_pct": 4.3
+    }
+  },
+  "reproductive": {
+    "menopausal_status": {
+      "pre": 1308,
+      "post": 1153,
+      "unknown": 506
+    }
+  }
+}

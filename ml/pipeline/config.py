@@ -23,9 +23,19 @@ SCHEMA_PATH = REPO_ROOT / "data" / "schema" / "hormos_schema.json"
 RAW_NHANES_DIR = RAW_DIR / "nhanes"
 RAW_MCPHASES_DIR = RAW_DIR / "mcphases"
 
-# Integrated table (local/large — git-ignored) and the small app artifact.
+# Integrated table (local/large — git-ignored) and the small app artifacts.
 INTEGRATED_PARQUET = PROCESSED_DIR / "daily_observation.parquet"
+SUBJECT_PARQUET = PROCESSED_DIR / "subject.parquet"
 INSIGHTS_ARTIFACT = PROCESSED_DIR / "insights.sample.json"
+# Real, committed reference artifact derived from public NHANES.
+NHANES_REFERENCE_ARTIFACT = PROCESSED_DIR / "nhanes_reference.json"
+
+# NHANES survey cycle used. 2011-2012 (suffix "G") is chosen because it is the
+# most recent cycle that ships DEMO + RHQ + THYROD together (the thyroid panel
+# was not collected in 2017-2018). Pinning the cycle keeps results reproducible.
+NHANES_CYCLE = "2011-2012"
+NHANES_CYCLE_SUFFIX = "G"
+NHANES_CYCLE_YEAR = "2011"  # first year, used in the CDC public download path
 
 # --- Schema constants ------------------------------------------------------
 SCHEMA_NAME = "hormos_unified_longitudinal_v0"

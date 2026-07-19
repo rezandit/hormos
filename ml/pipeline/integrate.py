@@ -19,19 +19,22 @@ def _validate_columns(df: "pd.DataFrame", expected: list[str], name: str) -> Non
         raise ValueError(f"{name} is missing required schema columns: {missing}")
 
 
-def build_integrated() -> "pd.DataFrame":
+def build_integrated() -> tuple["pd.DataFrame", "pd.DataFrame"]:
     """Load every available source, map to schema, and concatenate.
 
-    Sources that are not yet available (e.g. mcPHASES pre-credentialing) are
-    skipped with a warning so the pipeline still runs on partial data.
+    Returns (subject_df, daily_observation_df). Sources that are not yet
+    available (e.g. mcPHASES pre-credentialing) are skipped with a warning so
+    the pipeline still runs on partial data.
     """
     config.ensure_dirs()
+    subject_frames: list[pd.DataFrame] = []
     daily_frames: list[pd.DataFrame] = []
 
     # NHANES (public).
     try:
         nhanes_raw = load_nhanes.download_nhanes()
-        _, nhanes_daily = load_nhanes.to_unified_schema(nhanes_raw)
+        nhanes_subject, nhanes_daily = load_nhanes.to_unified_schema(nhanes_raw)
+        subject_frames.append(nhanes_subject)
         daily_frames.append(nhanes_daily)
     except NotImplementedError:
         print("[integrate] NHANES mapping not implemented yet — skipping.")
@@ -40,7 +43,8 @@ def build_integrated() -> "pd.DataFrame":
 
     # mcPHASES (credentialed).
     try:
-        _, mc_daily = load_mcphases.to_unified_schema()
+        mc_subject, mc_daily = load_mcphases.to_unified_schema()
+        subject_frames.append(mc_subject)
         daily_frames.append(mc_daily)
     except (NotImplementedError, FileNotFoundError) as exc:
         print(f"[integrate] mcPHASES unavailable: {exc}")
@@ -50,18 +54,25 @@ def build_integrated() -> "pd.DataFrame":
             "No source produced data. Implement at least one loader mapping first."
         )
 
-    integrated = pd.concat(daily_frames, ignore_index=True)
-    integrated = integrated.reindex(columns=config.DAILY_OBSERVATION_COLUMNS)
+    subjects = pd.concat(subject_frames, ignore_index=True).reindex(
+        columns=config.SUBJECT_COLUMNS
+    )
+    integrated = pd.concat(daily_frames, ignore_index=True).reindex(
+        columns=config.DAILY_OBSERVATION_COLUMNS
+    )
+    _validate_columns(subjects, config.SUBJECT_COLUMNS, "subject")
     _validate_columns(integrated, config.DAILY_OBSERVATION_COLUMNS, "integrated")
-    return integrated
+    return subjects, integrated
 
 
 def main() -> None:
-    df = build_integrated()
+    subjects, df = build_integrated()
+    subjects.to_parquet(config.SUBJECT_PARQUET, index=False)
     df.to_parquet(config.INTEGRATED_PARQUET, index=False)
     print(
-        f"[integrate] wrote {len(df)} rows -> {config.INTEGRATED_PARQUET} "
-        "(git-ignored)."
+        f"[integrate] wrote {len(subjects)} subjects -> {config.SUBJECT_PARQUET}\n"
+        f"[integrate] wrote {len(df)} daily rows -> {config.INTEGRATED_PARQUET} "
+        "(both git-ignored)."
     )
 
 

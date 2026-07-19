@@ -19,9 +19,13 @@
 | Source | Provider | Access | Role in HormOS |
 |---|---|---|---|
 | **mcPHASES** | PhysioNet | Credentialed (DUA + training) | Longitudinal core: wearable, CGM, hormones, cycle, sleep, symptoms |
-| **NHANES** | CDC | Public, de-identified | Population reference: thyroid, reproductive health, demographics |
+| **NHANES 2011-2012** | CDC | Public, de-identified | Population reference: thyroid (TSH), reproductive health, demographics |
 
-TODO: exact NHANES survey cycle(s) used (e.g. 2017–2018) and mcPHASES version.
+- **NHANES cycle used: 2011-2012** (files `DEMO_G`, `RHQ_G`, `THYROD_G`). This
+  is the most recent cycle shipping DEMO + RHQ + THYROD together; the thyroid
+  panel was not collected in 2017-2018. Scope: adult women (age ≥ 18).
+  Produces 2,967 subjects; 841 with a TSH lab result.
+- mcPHASES version: TODO (pending PhysioNet credentialing).
 
 ## 3. Schema summary
 

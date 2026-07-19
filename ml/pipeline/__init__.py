@@ -11,4 +11,5 @@ __all__ = [
     "load_mcphases",
     "integrate",
     "build_insights",
+    "build_nhanes_reference",
 ]
