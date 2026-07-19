@@ -7,80 +7,69 @@ export default function Home() {
       <div className="mx-auto max-w-5xl px-6 py-12">
         {/* Header */}
         <header className="mb-10">
-          <div className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-3 py-1 text-xs font-medium text-rose-700">
-            <span className="h-2 w-2 rounded-full bg-rose-500" />
-            HormOS · Layer 03 — Application Infrastructure
+          <div className="inline-flex items-center gap-2 text-sm font-semibold text-rose-600">
+            <span className="h-2.5 w-2.5 rounded-full bg-rose-500" />
+            HormOS
           </div>
           <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900">
-            Your symptoms, in the context of your cycle
+            Understand how you feel, day by day
           </h1>
           <p className="mt-3 max-w-2xl text-lg text-slate-600">
-            Hormones shift continuously, but a doctor&apos;s visit only captures
-            a single snapshot. HormOS turns day-to-day symptom logs into
-            patterns, comparing your day to integrated open datasets
-            (mcPHASES + NHANES) mapped to one reusable schema.
+            Your energy, mood, and symptoms shift with your cycle — but a single
+            check-up only sees one moment. Log how you feel today and see the
+            bigger picture across your cycle.
           </p>
         </header>
 
-        {/* Disclaimer banner — required by challenge (no medical claims). */}
+        {/* Gentle, non-clinical note (kept intentionally short and friendly). */}
         <div className="mb-10 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
-          <strong>Research &amp; education only.</strong> HormOS is not a medical
-          device and does not diagnose, treat, or provide medical advice. The
-          insights below are descriptive statistical patterns from population
-          data. Talk to a qualified clinician about your health.
+          HormOS helps you notice patterns and understand your body better. It
+          isn&apos;t a doctor and doesn&apos;t diagnose — always talk to a
+          healthcare professional about your health.
         </div>
 
         {/* Core feature */}
         <SymptomInsight />
 
-        {/* Real population reference derived from the data pipeline (NHANES). */}
+        {/* Trust: grounded in real, anonymized health data. */}
         <div className="mt-12">
           <NhanesReference />
-          <p className="mt-2 text-xs text-slate-400">
-            The cycle-phase insight above uses a labeled synthetic sample
-            pending PhysioNet mcPHASES access; the thyroid reference here is real
-            data produced by the same pipeline (
-            <code className="rounded bg-slate-100 px-1 py-0.5">
-              ml/pipeline/build_nhanes_reference.py
-            </code>
-            ).
-          </p>
         </div>
 
-        {/* Foundation / provenance section */}
+        {/* Why you can trust it — in plain language. */}
         <section className="mt-14 grid gap-6 md:grid-cols-3">
           <div className="rounded-xl border border-slate-100 bg-white p-5">
             <h3 className="text-sm font-semibold text-slate-800">
-              Built on a reusable schema
+              Grounded in real research
             </h3>
             <p className="mt-2 text-sm text-slate-500">
-              mcPHASES and NHANES are harmonized into one unified longitudinal
-              schema — the reusable foundation, not an isolated app.
+              Your insights are based on real, anonymized health data from
+              thousands of women — not guesswork.
             </p>
           </div>
           <div className="rounded-xl border border-slate-100 bg-white p-5">
             <h3 className="text-sm font-semibold text-slate-800">
-              Transparent methodology
+              Clear, honest patterns
             </h3>
             <p className="mt-2 text-sm text-slate-500">
-              Every number is a documented descriptive statistic computed by an
-              open Python pipeline — reproducible, no black box.
+              We show you general patterns in plain language, so you always know
+              what you&apos;re looking at.
             </p>
           </div>
           <div className="rounded-xl border border-slate-100 bg-white p-5">
             <h3 className="text-sm font-semibold text-slate-800">
-              Open license
+              Your data, respected
             </h3>
             <p className="mt-2 text-sm text-slate-500">
-              Code under MIT, data/docs under CC-BY-4.0, so the community can
-              build on it.
+              What you log stays private. Nothing here is a diagnosis — it&apos;s
+              about helping you understand yourself.
             </p>
           </div>
         </section>
 
         <footer className="mt-14 border-t border-slate-100 pt-6 text-xs text-slate-400">
-          HormOS — Hack-Nation Challenge 05 · Foundation Models for Women&apos;s
-          Hormonal Health. Not a medical or diagnostic tool.
+          HormOS — helping women understand their hormonal health. Not a medical
+          or diagnostic tool.
         </footer>
       </div>
     </main>

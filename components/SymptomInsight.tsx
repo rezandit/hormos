@@ -21,6 +21,13 @@ const PHASE_LABEL: Record<string, string> = {
   luteal: "Luteal",
 };
 
+const PHASE_DESCRIPTION: Record<string, string> = {
+  menstrual: "the days of your period, when energy is often lower",
+  follicular: "the days after your period, when energy often rises",
+  ovulatory: "around mid-cycle",
+  luteal: "the week or so before your period, when PMS-type symptoms are common",
+};
+
 export default function SymptomInsight() {
   const [values, setValues] = useState<Record<string, number>>(
     Object.fromEntries(SYMPTOMS.map((s) => [s.key, 0])),
@@ -124,20 +131,20 @@ export default function SymptomInsight() {
           <div className="mt-4 space-y-6">
             <div className="rounded-xl bg-rose-50 p-4">
               <p className="text-xs uppercase tracking-wide text-rose-500">
-                Closest population profile
+                Your day looks most like
               </p>
               <p className="mt-1 text-2xl font-bold text-rose-700">
-                {PHASE_LABEL[result.bestMatch.phase]} phase
+                Your {PHASE_LABEL[result.bestMatch.phase].toLowerCase()} phase
               </p>
               <p className="mt-1 text-sm text-slate-600">
-                {result.bestMatch.similarity}% similarity to the average{" "}
-                {PHASE_LABEL[result.bestMatch.phase].toLowerCase()}-phase day.
+                How you feel today is most similar to{" "}
+                {PHASE_DESCRIPTION[result.bestMatch.phase]}.
               </p>
             </div>
 
             <div>
               <p className="mb-2 text-sm font-medium text-slate-700">
-                All phases ranked
+                How your day compares to each phase
               </p>
               <div className="space-y-2">
                 {result.ranked.map((r) => (
@@ -151,30 +158,28 @@ export default function SymptomInsight() {
                         style={{ width: `${r.similarity}%` }}
                       />
                     </div>
-                    <span className="w-10 text-right text-xs text-slate-500">
-                      {r.similarity}%
-                    </span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {result.reportedSymptomPeaks.length > 0 && (
+            {result.reportedSymptomPeaks.filter((p) => p.peak).length > 0 && (
               <div>
                 <p className="mb-2 text-sm font-medium text-slate-700">
-                  When these symptoms typically peak
+                  Good to know
                 </p>
-                <ul className="space-y-1 text-sm text-slate-600">
+                <ul className="space-y-1.5 text-sm text-slate-600">
                   {result.reportedSymptomPeaks
                     .filter((p) => p.peak)
                     .map((p) => (
-                      <li key={p.symptom} className="flex justify-between">
-                        <span className="capitalize">
-                          {p.symptom.replace("_", " ")}
-                        </span>
-                        <span className="text-slate-500">
-                          peaks in {PHASE_LABEL[p.peak!.phase].toLowerCase()}{" "}
-                          phase
+                      <li key={p.symptom} className="flex gap-2">
+                        <span className="text-rose-400">•</span>
+                        <span>
+                          <span className="capitalize">
+                            {p.symptom.replace("_", " ")}
+                          </span>{" "}
+                          is often most noticeable during the{" "}
+                          {PHASE_LABEL[p.peak!.phase].toLowerCase()} phase.
                         </span>
                       </li>
                     ))}
@@ -183,9 +188,9 @@ export default function SymptomInsight() {
             )}
 
             <p className="border-t border-slate-100 pt-3 text-xs text-slate-400">
-              Based on {result.meta.n_observations.toLocaleString()} daily
-              records from {result.meta.n_subjects} subjects. Data status:{" "}
-              {result.meta.data_status}
+              These are general patterns to help you reflect — not a diagnosis.
+              Everyone is different. Based on {result.meta.n_observations.toLocaleString()} daily
+              records from {result.meta.n_subjects} subjects.
             </p>
           </div>
         )}

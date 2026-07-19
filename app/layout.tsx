@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HormOS — Symptom-to-Cycle-Phase Insight",
+  title: "HormOS — Understand how you feel, day by day",
   description:
-    "Open research infrastructure for women's hormonal health. Track daily symptoms and see how they relate to menstrual cycle phases, computed from integrated open datasets. Research/education only — not a medical or diagnostic tool.",
+    "Log how you feel each day and see how your energy, mood, and symptoms shift across your cycle. Grounded in real health data. Not a medical or diagnostic tool.",
 };
 
 export default function RootLayout({
