@@ -108,6 +108,7 @@ See [`ml/pipeline/README.md`](./ml/pipeline/README.md) for details.
 
 ## Documentation
 
+- [Technical overview](./docs/technical-overview.md) — stack, architecture, implementation
 - [Dataset card](./docs/dataset-card.md)
 - [Model card](./docs/model-card.md)
 - [Benchmark methodology](./docs/benchmark-methodology.md)
