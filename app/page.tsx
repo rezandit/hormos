@@ -1,65 +1,73 @@
-import Image from "next/image";
+import SymptomInsight from "@/components/SymptomInsight";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="min-h-screen bg-gradient-to-b from-rose-50 via-white to-white">
+      <div className="mx-auto max-w-5xl px-6 py-12">
+        {/* Header */}
+        <header className="mb-10">
+          <div className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-3 py-1 text-xs font-medium text-rose-700">
+            <span className="h-2 w-2 rounded-full bg-rose-500" />
+            HormOS · Layer 03 — Application Infrastructure
+          </div>
+          <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900">
+            Your symptoms, in the context of your cycle
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-3 max-w-2xl text-lg text-slate-600">
+            Hormones shift continuously, but a doctor&apos;s visit only captures
+            a single snapshot. HormOS turns day-to-day symptom logs into
+            patterns, comparing your day to integrated open datasets
+            (mcPHASES + NHANES) mapped to one reusable schema.
           </p>
+        </header>
+
+        {/* Disclaimer banner — required by challenge (no medical claims). */}
+        <div className="mb-10 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+          <strong>Research &amp; education only.</strong> HormOS is not a medical
+          device and does not diagnose, treat, or provide medical advice. The
+          insights below are descriptive statistical patterns from population
+          data. Talk to a qualified clinician about your health.
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        {/* Core feature */}
+        <SymptomInsight />
+
+        {/* Foundation / provenance section */}
+        <section className="mt-14 grid gap-6 md:grid-cols-3">
+          <div className="rounded-xl border border-slate-100 bg-white p-5">
+            <h3 className="text-sm font-semibold text-slate-800">
+              Built on a reusable schema
+            </h3>
+            <p className="mt-2 text-sm text-slate-500">
+              mcPHASES and NHANES are harmonized into one unified longitudinal
+              schema — the reusable foundation, not an isolated app.
+            </p>
+          </div>
+          <div className="rounded-xl border border-slate-100 bg-white p-5">
+            <h3 className="text-sm font-semibold text-slate-800">
+              Transparent methodology
+            </h3>
+            <p className="mt-2 text-sm text-slate-500">
+              Every number is a documented descriptive statistic computed by an
+              open Python pipeline — reproducible, no black box.
+            </p>
+          </div>
+          <div className="rounded-xl border border-slate-100 bg-white p-5">
+            <h3 className="text-sm font-semibold text-slate-800">
+              Open license
+            </h3>
+            <p className="mt-2 text-sm text-slate-500">
+              Code under MIT, data/docs under CC-BY-4.0, so the community can
+              build on it.
+            </p>
+          </div>
+        </section>
+
+        <footer className="mt-14 border-t border-slate-100 pt-6 text-xs text-slate-400">
+          HormOS — Hack-Nation Challenge 05 · Foundation Models for Women&apos;s
+          Hormonal Health. Not a medical or diagnostic tool.
+        </footer>
+      </div>
+    </main>
   );
 }

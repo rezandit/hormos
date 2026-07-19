@@ -1,0 +1,52 @@
+{
+  "schema_name": "hormos_unified_longitudinal_v0",
+  "version": "0.1.0",
+  "description": "Unified, source-agnostic longitudinal schema for women's hormonal-health signals. Harmonizes per-subject daily observations from heterogeneous sources (mcPHASES, NHANES) into a common shape so downstream symptom-to-cycle-phase insights are reproducible and source-independent. This is the reusable Foundation-Value artifact underlying the HormOS Layer-03 application.",
+  "license": "CC-BY-4.0 (schema + derived artifacts). Upstream raw data remains under PhysioNet / CDC terms.",
+  "grain": "One row = one (subject_id, observation_date) pair. Longitudinal per subject.",
+  "conventions": {
+    "missing_value": null,
+    "date_format": "ISO-8601 (YYYY-MM-DD). May be a relative day index when absolute dates are unavailable/de-identified.",
+    "scales": "Symptom severity uses an integer 0-3 ordinal scale (0=none, 1=mild, 2=moderate, 3=severe) to harmonize differing source encodings.",
+    "units": "SI where possible; unit recorded per numeric field below."
+  },
+  "tables": {
+    "subject": {
+      "description": "One row per subject. De-identified demographics + provenance.",
+      "primary_key": "subject_id",
+      "fields": {
+        "subject_id": { "type": "string", "description": "Stable de-identified id. Namespaced by source, e.g. 'mcphases:0007', 'nhanes:83732'." },
+        "source_dataset": { "type": "string", "enum": ["mcphases", "nhanes"], "description": "Originating dataset." },
+        "age_years": { "type": "integer", "unit": "years", "nullable": true },
+        "menopausal_status": { "type": "string", "enum": ["pre", "peri", "post", "unknown"], "nullable": true },
+        "reproductive_notes": { "type": "string", "nullable": true, "description": "Free-text/coded reproductive context (e.g. contraceptive use), de-identified." }
+      }
+    },
+    "daily_observation": {
+      "description": "Longitudinal daily record. Sparse: any field may be null when a source does not measure it.",
+      "primary_key": ["subject_id", "observation_date"],
+      "fields": {
+        "subject_id": { "type": "string", "description": "FK -> subject.subject_id" },
+        "observation_date": { "type": "string", "description": "ISO date or relative day index." },
+        "cycle_day": { "type": "integer", "unit": "days", "nullable": true, "description": "Day within menstrual cycle (1 = first day of menses)." },
+        "cycle_phase": { "type": "string", "enum": ["menstrual", "follicular", "ovulatory", "luteal", "unknown"], "nullable": true, "description": "Derived phase label. Derivation rules documented in docs/benchmark-methodology.md." },
+        "symptom_fatigue": { "type": "integer", "scale": "0-3", "nullable": true },
+        "symptom_migraine": { "type": "integer", "scale": "0-3", "nullable": true },
+        "symptom_mood": { "type": "integer", "scale": "0-3", "nullable": true, "description": "Negative mood / irritability severity." },
+        "symptom_brain_fog": { "type": "integer", "scale": "0-3", "nullable": true },
+        "symptom_cramps": { "type": "integer", "scale": "0-3", "nullable": true },
+        "sleep_hours": { "type": "number", "unit": "hours", "nullable": true },
+        "sleep_quality": { "type": "integer", "scale": "0-3", "nullable": true, "description": "0=poor .. 3=excellent." },
+        "stress_level": { "type": "integer", "scale": "0-3", "nullable": true },
+        "steps": { "type": "integer", "unit": "count", "nullable": true },
+        "resting_hr": { "type": "number", "unit": "bpm", "nullable": true },
+        "glucose_mean": { "type": "number", "unit": "mg/dL", "nullable": true, "description": "Mean CGM glucose for the day (mcPHASES)." },
+        "hormone_estradiol": { "type": "number", "unit": "pg/mL", "nullable": true },
+        "hormone_progesterone": { "type": "number", "unit": "ng/mL", "nullable": true },
+        "hormone_lh": { "type": "number", "unit": "mIU/mL", "nullable": true },
+        "hormone_fsh": { "type": "number", "unit": "mIU/mL", "nullable": true },
+        "hormone_tsh": { "type": "number", "unit": "mIU/L", "nullable": true, "description": "Thyroid-stimulating hormone (NHANES)." }
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "artifact": "hormos_symptom_phase_insight",
+  "schema_ref": "hormos_unified_longitudinal_v0",
+  "version": "0.1.0",
+  "generated_by": "ml/pipeline/build_insights.py",
+  "generated_at": "SYNTHETIC_PLACEHOLDER",
+  "data_status": "SYNTHETIC_PLACEHOLDER — not derived from real subjects. Generated so the demo runs before PhysioNet mcPHASES credentialing completes. Will be replaced by real integrated mcPHASES + NHANES statistics.",
+  "disclaimer": "Research/education only. These are population-level statistical patterns, not medical advice and not a diagnosis. Individual experiences vary.",
+  "n_subjects": 24,
+  "n_observations": 1680,
+  "phases": ["menstrual", "follicular", "ovulatory", "luteal"],
+  "symptoms": ["fatigue", "migraine", "mood", "brain_fog", "cramps"],
+  "scale": { "min": 0, "max": 3, "labels": ["none", "mild", "moderate", "severe"] },
+  "phase_symptom_means": {
+    "menstrual":  { "fatigue": 1.6, "migraine": 1.4, "mood": 1.3, "brain_fog": 1.2, "cramps": 2.1 },
+    "follicular": { "fatigue": 0.7, "migraine": 0.5, "mood": 0.6, "brain_fog": 0.5, "cramps": 0.3 },
+    "ovulatory":  { "fatigue": 0.9, "migraine": 0.7, "mood": 0.7, "brain_fog": 0.6, "cramps": 0.5 },
+    "luteal":     { "fatigue": 1.8, "migraine": 1.1, "mood": 1.9, "brain_fog": 1.7, "cramps": 0.9 }
+  },
+  "symptom_peak_phase": {
+    "fatigue":   { "phase": "luteal",    "mean": 1.8 },
+    "migraine":  { "phase": "menstrual", "mean": 1.4 },
+    "mood":      { "phase": "luteal",    "mean": 1.9 },
+    "brain_fog": { "phase": "luteal",    "mean": 1.7 },
+    "cramps":    { "phase": "menstrual", "mean": 2.1 }
+  },
+  "correlations": [
+    { "a": "sleep_hours",   "b": "fatigue",   "pearson_r": -0.42, "n": 1523, "note": "Fewer sleep hours associate with higher reported fatigue." },
+    { "a": "stress_level",  "b": "mood",      "pearson_r":  0.51, "n": 1498, "note": "Higher reported stress associates with worse mood scores." },
+    { "a": "sleep_quality", "b": "brain_fog", "pearson_r": -0.38, "n": 1471, "note": "Poorer sleep quality associates with more brain fog." }
+  ]
+}

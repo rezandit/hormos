@@ -39,3 +39,42 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ---------------------------------------------------------------------------
+# HormOS: data & ML pipeline
+# ---------------------------------------------------------------------------
+
+# Raw datasets — NEVER commit. Treat NHANES/mcPHASES as sensitive by default,
+# even though they are de-identified. PhysioNet credentialed data must stay local.
+/data/raw/
+*.xpt
+*.XPT
+
+# Large/exported ML artifacts (model checkpoints, precomputed features).
+# Small JSON insight artifacts consumed by API routes are allow-listed below.
+/ml/artifacts/*
+!/ml/artifacts/.gitkeep
+*.onnx
+*.pkl
+*.joblib
+*.parquet
+*.h5
+
+# Allow small, versioned insight artifacts consumed by Next.js API routes.
+!/data/processed/*.sample.json
+!/data/processed/*.sample.csv
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.python-version
+.ipynb_checkpoints/
+ml/**/.ipynb_checkpoints/
+
+# Secrets
+.env
+.env.*
+!.env.example

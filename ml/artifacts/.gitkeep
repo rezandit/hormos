@@ -1,0 +1,3 @@
+# Placeholder so the directory is tracked. Model checkpoints / large exports
+# here are git-ignored (see .gitignore). Small JSON insight artifacts consumed
+# by the app live in data/processed/ instead.
